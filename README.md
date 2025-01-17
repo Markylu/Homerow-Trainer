@@ -7,3 +7,15 @@ Computer Vision Based Homerow Typing Trainer
 3. Make CV to track figer location and actions
 4. Implement logic
 5. Make UI
+
+# Keyboard Typing Game
+
+# Keyboard and Key location
+
+# Hand and Finger location
+
+Model: https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/python
+
+# Logic/Intergation
+
+# Make UI
