@@ -8,7 +8,8 @@ Computer Vision Based Homerow Typing Trainer
 4. Implement logic
 5. Make UI
 
-# Keyboard Typing Game
+# Keyboard Typing Game/Text Editor
+Tutorial: https://www.youtube.com/watch?v=xqDonHEYPgA&ab_channel=MakeWithData
 
 # Keyboard and Key location
 
