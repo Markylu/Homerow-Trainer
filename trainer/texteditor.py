@@ -1,9 +1,10 @@
 from tkinter import *
 from tkinter.filedialog import *
 from tkinter.messagebox import *
+from dbapp import add_input
 
 filename = None
-# new file
+
 def newFile():
     global filename
     filename = "Untitled"
@@ -31,7 +32,9 @@ def openFile():
     text.insert(0.0, t)
 
 def key_press(event) -> None:
-    print(f"Key pressed: {event.char}")
+    stroke = str(ord(event.char))
+    print(f"Key pressed: {ord(event.char)} at {event.time}")
+    add_input(stroke, int(event.time))
 
 root = Tk()
 root.title("Text Editor")
