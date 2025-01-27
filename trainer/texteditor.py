@@ -3,7 +3,7 @@ from tkinter.filedialog import *
 from tkinter.messagebox import *
 
 filename = None
-
+# new file
 def newFile():
     global filename
     filename = "Untitled"
