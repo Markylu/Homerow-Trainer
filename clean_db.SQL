@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS inputs; 
+CREATE TABLE inputs (id BIGSERIAL PRIMARY KEY, keystroke VARCHAR(20), timestamp VARCHAR(100));
