@@ -30,7 +30,7 @@ def openFile():
     text.delete(0.0, END)
     text.insert(0.0, t)
 
-def key_press(event):
+def key_press(event) -> None:
     print(f"Key pressed: {event.char}")
 
 root = Tk()
