@@ -20,3 +20,15 @@ Model: https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/pyt
 # Logic/Intergation
 
 # Make UI
+
+# Todo
+
+- [x] Make Typing UI
+- [x] Make Database
+- [x] Integrate Typing and Database
+- [ ] Make CV camera
+- [ ] Implement CV Model
+- [ ] Implement CV logic
+- [ ] Connect CV to Database
+- [ ] Make logic file
+- [ ] Connect logic to database
