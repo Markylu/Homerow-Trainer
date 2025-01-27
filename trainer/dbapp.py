@@ -30,3 +30,4 @@ def add_input(keystroke, timestamp):
         new_input = Input(keystroke=keystroke, timestamp=timestamp)
         session.add(new_input)
         session.commit()
+        print(f"Added input: {keystroke} ({timestamp})")
