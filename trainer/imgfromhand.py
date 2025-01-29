@@ -6,11 +6,16 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 from mediapipe import solutions
 from mediapipe.framework.formats import landmark_pb2
+import os
+from dotenv import load_dotenv, dotenv_values
+load_dotenv()
 
 MARGIN = 30  # pixels
 FONT_SIZE = 5
 FONT_THICKNESS = 5
 HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
+modelpath = os.getenv("MODEL_PATH")
+imagepath = os.getenv("IMAGE_PATH")
 
 def draw_landmarks_on_image(rgb_image, detection_result):
     hand_landmarks_list = detection_result.hand_landmarks
@@ -47,13 +52,13 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 
 # STEP 2: Create an HandLandmarker object.
-base_options = python.BaseOptions(model_asset_path='/Users/markuslu/Documents/GitHub/Homerow-Trainer/trainer/hand_landmarker.task')
+base_options = python.BaseOptions(model_asset_path=modelpath)
 options = vision.HandLandmarkerOptions(base_options=base_options,
                                        num_hands=2)
 detector = vision.HandLandmarker.create_from_options(options)
 
 # STEP 3: Load the input image.
-image = mp.Image.create_from_file("/Users/markuslu/Documents/GitHub/Homerow-Trainer/trainer/image.jpg")
+image = mp.Image.create_from_file(imagepath)
 
 # STEP 4: Detect hand landmarks from the input image.
 detection_result = detector.detect(image)
