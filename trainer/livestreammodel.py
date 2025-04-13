@@ -13,7 +13,7 @@ load_dotenv()
 MARGIN = 30  # pixels
 FONT_SIZE = 5
 FONT_THICKNESS = 5
-HANDEDNESS_TEXT_COLOR = (88, 205, 54) # vibrant green
+HANDEDNESS_TEXT_COLOR = (88, 205, 54)  # vibrant green
 modelpath = os.getenv("MODEL_PATH")
 BaseOptions = mp.tasks.BaseOptions
 HandLandmarker = mp.tasks.vision.HandLandmarker
@@ -59,25 +59,42 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 def print_result(result: HandLandmarkerResult, output_image: mp.Image, timestamp_ms: int):
     print('hand landmarker result: {}'.format(result))
 
-# STEP 2: Create an HandLandmarker object.
+
+# STEP 2: Create a HandLandmarker object.
 base_options = HandLandmarkerOptions(
     base_options=BaseOptions(model_asset_path=modelpath),
     running_mode=VisionRunningMode.LIVE_STREAM,
     result_callback=print_result)
-options = vision.HandLandmarkerOptions(base_options=base_options,
-                                       num_hands=2)
+options = vision.HandLandmarkerOptions(base_options=base_options, num_hands=2)
+
+# Open a video capture  (webcam or video file)
+cap = cv2.VideoCapture(0)  # 0 is the default webcam
 
 with HandLandmarker.create_from_options(options) as landmarker:
+    while cap.isOpened():
+        ret, frame = cap.read()
+        if not ret:
+            print("Failed to capture frame. Exiting...")
+            break
 
-# STEP 3: Load the input image.
-image = mp.Image.create_from_file(imagepath)
+        # Convert the frame to RGB (MediaPipe requires RGB format)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-# STEP 4: Detect hand landmarks from the input image.
-detection_result = detector.detect(image)
+        # Convert the frame to a MediaPipe Image
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
 
-# STEP 5: Process the classification result. In this case, visualize it.
+        # Detect hand landmarks
+        landmarker.detect_async(mp_image, timestamp_ms=0)
 
-annotated_image = draw_landmarks_on_image(image.numpy_view(), detection_result)
-cv2.imshow("Annotated Image", cv2.cvtColor(annotated_image, cv2.COLOR_RGB2BGR))
-cv2.waitKey(0)
+        # Visualize the results (if available)
+        detection_result = landmarker.result()
+        if detection_result:
+            annotated_frame = draw_landmarks_on_image(rgb_frame, detection_result)
+            cv2.imshow("Live Hand Landmarks", cv2.cvtColor(annotated_frame, cv2.COLOR_RGB2BGR))
+
+        # Exit on pressing 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+cap.release()
 cv2.destroyAllWindows()
